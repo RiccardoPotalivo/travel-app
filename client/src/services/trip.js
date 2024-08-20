@@ -8,3 +8,8 @@ export const fetchTrips = async () => {
     return response.data;
 }
 
+// Create a new trip
+export const createTrip = async (tripData) => {
+    const response = await axios.post(API_URL, tripData);
+    return response.data;
+}

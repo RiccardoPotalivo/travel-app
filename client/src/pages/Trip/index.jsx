@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { fetchTrips } from "../../services/trip";
-import { Container, Row, Col, Card } from "react-bootstrap";
+import { Container, Row, Col, Card, Button } from "react-bootstrap";
 
 function TripIndex() {
     const [trips, setTrips] = useState([]);
@@ -16,7 +16,10 @@ function TripIndex() {
     return (
         <Container>
             <h1>Trips</h1>
-            <Link to="/create-trip">Create New Trip</Link>
+            <Button variant="primary" className="mt-3">
+                <Link to="/trips/create" className="text-white">Create New Trip</Link>
+            </Button>
+            {/* <Link to="/trips/create">Create New Trip</Link> */}
             <Row className="mt-5">
                 {trips.map((trip) => (
                     <Col key={trip._id} md={4} className="mb-4">
