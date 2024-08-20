@@ -6,7 +6,7 @@ const tripSchema = new mongoose.Schema({
     description: String,
     startDate: { type: Date, required: true },
     endDate: { type: Date, required: true },
-    days: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Day' }]
+    // days: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Day' }]
 }, {
     timestamps: true // Add createdAt e updatedAt
 });
