@@ -7,5 +7,3 @@ import {
 const router = express.Router();
 
 router.route('/').post(createTrip).get(getTrips);
-
-export default router;
