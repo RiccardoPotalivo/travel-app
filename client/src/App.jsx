@@ -1,13 +1,15 @@
 import { useState } from 'react'
 import './App.css'
-import Home from './Home.jsx'
+import { BrowserRouter as Router } from 'react-router-dom'
+import AppRoutes from './routes/AppRoutes.jsx'
 
 function App() {
-
   return (
-    <>
-      <Home />
-    </>
+    <div className='App'>
+      <Router>
+        <AppRoutes />
+      </Router>
+    </div>
   )
 }
 
