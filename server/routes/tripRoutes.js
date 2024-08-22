@@ -2,14 +2,14 @@ import express from 'express';
 import {
     getTrips,
     getTrip,
-    createTrip,
+    createTripWithDays,
 } from '../controllers/tripController.js';
 
 const router = express.Router();
 
 
 router.route('/')
-    .post(createTrip)
+    .post(createTripWithDays)
     .get(getTrips)
 
 router.route('/:id').get(getTrip);

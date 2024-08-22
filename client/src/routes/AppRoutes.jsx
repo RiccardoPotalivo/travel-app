@@ -10,7 +10,7 @@ function AppRoutes() {
         <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/trips" element={<TripIndex />} />
-            <Route path="/trips/:id" element={<TripShow />} />
+            <Route path="/trips/:tripId" element={<TripShow />} />
             <Route path="/trips/create" element={<TripCreate />} />
             
 
