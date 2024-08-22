@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { fetchTrip } from "../../services/trip";
 import { Container, Spinner } from "react-bootstrap";
 
@@ -54,7 +54,9 @@ function TripShow() {
             <ul>
                 {trip.days.map(day => (
                     <li key={day._id}>
-                        <strong>{day.title}</strong>: {new Date(day.date).toLocaleDateString()}
+                        <Link to={`/days/${day._id}`}>
+                            {new Date(day.date).toLocaleDateString()} - {day.title}
+                        </Link>
                     </li>
                 ))}
             </ul>
