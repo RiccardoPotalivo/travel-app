@@ -4,13 +4,13 @@ import { fetchTrip } from "../../services/trip";
 import { Container, Spinner } from "react-bootstrap";
 
 function TripShow() {
-    const { tripId } = useParams();
+    const { tripSlug } = useParams();
     const [trip, setTrip] = useState(null);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         setLoading(true);
-        fetchTrip(tripId)
+        fetchTrip(tripSlug)
             .then((response) => {
                 setTrip(response);
                 setLoading(false);
@@ -19,7 +19,7 @@ function TripShow() {
                 console.error("There was an error fetching the trip!", error);
                 setLoading(false);
             });
-    }, [tripId]);
+    }, [tripSlug]);
 
     if (loading) {
         return (
@@ -35,7 +35,7 @@ function TripShow() {
         return <Container>No trip found</Container>;
     }
     
-    console.log('trip', trip);
+    // console.log('trip', trip);
     // console.log('days', trip.days);
 
     return (
@@ -54,7 +54,7 @@ function TripShow() {
             <ul>
                 {trip.days.map(day => (
                     <li key={day._id}>
-                        <Link to={`/days/${day._id}`}>
+                        <Link to={`/trips/${trip.slug}/days/${day.slug}`}>
                             {new Date(day.date).toLocaleDateString()} - {day.title}
                         </Link>
                     </li>

@@ -2,22 +2,15 @@ import axios from "axios";
 
 const API_URL = "http://localhost:5000/api/trips";
 
-// Fetch all days
-export const fetchDays = (tripId) => {
-    return axios.get(`${API_URL}/${tripId}/days`)
-        .then(response => response.data)
-        .catch((error) => {
-            console.error("Error fetching days", error);
-            throw error;
-        });
-}
-
-// Create a new day
-export const createDay = async (tripId, dayData) => {
-    return axios.post(`${API_URL}/${tripId}/days`, dayData)
-        .then(response => response.data)
-        .catch((error) => {
-            console.error("Error creating day", error);
-            throw error;
-        });
+// Fetch a single day
+export const fetchDay = async (tripSlug, daySlug) => {
+    try {
+        // console.log(`Fetching day with tripSlug: ${tripSlug} and daySlug: ${daySlug}`);
+        const response = await axios.get(`${API_URL}/${tripSlug}/days/${daySlug}`);
+        // console.log('Fetched day:', response.data);
+        return response.data;
+    } catch (error) {
+        console.error(`Error fetching day with tripSlug ${tripSlug} and daySlug ${daySlug}:`, error.response?.data || error.message);
+        throw error;
+    }
 }

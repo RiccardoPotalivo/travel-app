@@ -25,7 +25,7 @@ function TripIndex() {
                     <Col key={trip._id} md={4} className="mb-4">
                         <Card>
                             <Card.Body>
-                                <Card.Title><Link to={`/trips/${trip._id}`}>{trip.title}</Link></Card.Title>
+                                <Card.Title><Link to={`/trips/${trip.slug}`}>{trip.title}</Link></Card.Title>
                                 <Card.Text>{trip.description}</Card.Text>
                                 <Card.Text>
                                     <strong>Start Date:</strong>{" "}

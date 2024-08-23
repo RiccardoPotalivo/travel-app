@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { createTrip } from "../../services/trip";
 import { Container, Form, Button } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
 function TripCreate() {
     const [tripData, setTripData] = useState({
@@ -9,6 +10,8 @@ function TripCreate() {
         startDate: "",
         endDate: "",
     });
+
+    const navigate = useNavigate();
 
     const handleChange = (e) => {
         setTripData({ ...tripData, [e.target.name]: e.target.value });
@@ -19,8 +22,9 @@ function TripCreate() {
         // Send the post request to create a new Trip
         createTrip(tripData)
             .then(response => {
-                console.log(response);
+                // console.log(response);
                 // setTrips([...trips, response.data]);
+                navigate(`/trips/${response.slug}`);
                 setTripData({
                     title: "",
                     description: "",
