@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Breadcrumb } from 'react-bootstrap';
+import { Breadcrumb, Badge } from 'react-bootstrap';
 import { fetchTrip } from '../services/trip';
 import { fetchDay } from '../services/day';
+import './Breadcrumbs.scss';
 
 const Breadcrumbs = () => {
     const location = useLocation();
@@ -14,30 +15,32 @@ const Breadcrumbs = () => {
         const fetchData = async () => {
             setIsLoading(true);
             const pathParts = location.pathname.split('/').filter(Boolean);
-            // console.log("Path parts:", pathParts);
 
-            if (pathParts[0] === 'trips' && pathParts[1]) {
-                const tripSlug = pathParts[1];
-                try {
-                    const tripData = await fetchTrip(tripSlug);
-                    // console.log('Fetched trip data:', tripData);
-                    setTrip(tripData);
+            if (pathParts[0] === 'trips') {
+                if (pathParts[1]) {
+                    const tripSlug = pathParts[1];
+                    try {
+                        const tripData = await fetchTrip(tripSlug);
+                        setTrip(tripData);
 
-                    if (pathParts[2] === 'days' && pathParts[3]) {
-                        const daySlug = pathParts[3];
-                        try {
-                            const dayData = await fetchDay(tripSlug, daySlug);
-                            // console.log('Fetched day data:', dayData);
-                            setDay(dayData);
-                        } catch (error) {
-                            console.error('Error fetching day:', error);
+                        if (pathParts[2] === 'days' && pathParts[3]) {
+                            const daySlug = pathParts[3];
+                            try {
+                                const dayData = await fetchDay(tripSlug, daySlug);
+                                setDay(dayData);
+                            } catch (error) {
+                                console.error('Error fetching day:', error);
+                                setDay(null);
+                            }
+                        } else {
                             setDay(null);
                         }
-                    } else {
+                    } catch (error) {
+                        console.error('Error fetching trip:', error);
+                        setTrip(null);
                         setDay(null);
                     }
-                } catch (error) {
-                    console.error('Error fetching trip:', error);
+                } else {
                     setTrip(null);
                     setDay(null);
                 }
@@ -56,21 +59,37 @@ const Breadcrumbs = () => {
         return <div>Loading breadcrumbs...</div>;
     }
 
+    const isHomeActive = location.pathname === '/';
+    const isTripsActive = location.pathname.startsWith('/trips') && !trip;
+    const isTripActive = trip && !day && location.pathname.startsWith(`/trips/${trip.slug}`);
+    const isDayActive = day && location.pathname.startsWith(`/trips/${trip.slug}/days/${day.slug}`);
+
     return (
-        <Breadcrumb>
-            <Breadcrumb.Item linkAs={Link} linkProps={{ to: '/' }}>Home</Breadcrumb.Item>
+        <Breadcrumb className="custom-breadcrumb">
+            <Breadcrumb.Item className={isHomeActive ? 'active' : ''}>
+                <Link to="/">
+                    <Badge className={isHomeActive ? 'badge-active' : 'badge-inactive'}>Home</Badge>
+                </Link>
+            </Breadcrumb.Item>
+            {!isHomeActive && (
+            <Breadcrumb.Item className={isTripsActive ? 'active' : ''}>
+                <Link to="/trips">
+                    <Badge className={isTripsActive ? 'badge-active' : 'badge-inactive'}>Trips</Badge>
+                </Link>
+            </Breadcrumb.Item>
+            )}
             {trip && (
-                <Breadcrumb.Item 
-                    linkAs={Link} 
-                    linkProps={{ to: `/trips/${trip.slug}` }}
-                    active={!day}
-                >
-                    {trip.title}
+                <Breadcrumb.Item className={isTripActive ? 'active' : ''}>
+                    <Link to={`/trips/${trip.slug}`}>
+                        <Badge className={isTripActive ? 'badge-active' : 'badge-inactive'}>
+                            {trip.title}
+                        </Badge>
+                    </Link>
                 </Breadcrumb.Item>
             )}
             {day && (
                 <Breadcrumb.Item active>
-                    {day.title}
+                    <Badge className="badge-active">{day.title}</Badge>
                 </Breadcrumb.Item>
             )}
         </Breadcrumb>

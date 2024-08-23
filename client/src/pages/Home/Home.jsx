@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Form, Button, Container, Row, Col, Card } from "react-bootstrap";
+import './Home.scss';
 
 function Home() {
     const [trips, setTrips] = useState([]);

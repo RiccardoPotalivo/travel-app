@@ -1,0 +1,43 @@
+.custom-breadcrumb {
+    background-color: #f8f9fa; // Light background color
+    border-radius: 5px;
+    padding: 10px 15px;
+    margin-bottom: 20px;
+
+    .breadcrumb {
+        margin: 0;
+    }
+
+    .breadcrumb-item {
+        display: inline-block;
+        margin-right: 5px;
+
+        .badge {
+            padding: 5px 10px;
+            border-radius: 3px;
+            font-size: 0.9rem;
+            text-transform: capitalize; // For consistent badge display
+
+            &.badge-inactive {
+                background-color: #0056b3 !important; // Background color for non-active badges
+                color: #fff !important; // Text color for non-active badges
+            }
+
+            &.badge-active {
+                background-color: #F28705 !important; // Background color for active badges
+                color: #fff !important; // Text color for active badges
+            }
+        }
+
+        // Link styles in breadcrumb
+        a {
+            text-decoration: none;
+            color: #03658C; // Text color for links
+
+            &:hover {
+                text-decoration: underline;
+                color: #0056b3; // Color on hover
+            }
+        }
+    }
+}
