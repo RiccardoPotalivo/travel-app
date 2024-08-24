@@ -61,6 +61,7 @@ const Breadcrumbs = () => {
 
     const isHomeActive = location.pathname === '/';
     const isTripsActive = location.pathname.startsWith('/trips') && !trip;
+    const isTripsCreate = location.pathname.startsWith('/trips/create');
     const isTripActive = trip && !day && location.pathname.startsWith(`/trips/${trip.slug}`);
     const isDayActive = day && location.pathname.startsWith(`/trips/${trip.slug}/days/${day.slug}`);
 
@@ -74,7 +75,14 @@ const Breadcrumbs = () => {
             {!isHomeActive && (
             <Breadcrumb.Item className={isTripsActive ? 'active' : ''}>
                 <Link to="/trips">
-                    <Badge className={isTripsActive ? 'badge-active' : 'badge-inactive'}>Trips</Badge>
+                    <Badge className={isTripsActive && !isTripsCreate ? 'badge-active' : 'badge-inactive'}>Trips</Badge>
+                </Link>
+            </Breadcrumb.Item>
+            )}
+            {isTripsCreate && (
+            <Breadcrumb.Item className={isTripsCreate ? 'active' : ''}>
+                <Link to="/trips/create">
+                    <Badge className={isTripsCreate ? 'badge-active' : 'badge-inactive'}>Create New Trip</Badge>
                 </Link>
             </Breadcrumb.Item>
             )}
