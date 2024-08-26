@@ -64,9 +64,9 @@ export const createTripWithDays = async (req, res) => {
             dayDate.setDate(start.getDate() + i);
 
             // Crea e salva ogni giorno
-            const daySlug = await generateSlug(`${newTrip.slug} Giorno ${i + 1}`, Day);
+            const daySlug = await generateSlug(`${newTrip.slug} Day ${i + 1}`, Day);
             const day = new Day({
-                title: `Giorno ${i + 1}`,
+                title: `Day ${i + 1}`,
                 slug: daySlug,
                 date: dayDate,
                 trip: newTrip._id
