@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { fetchStop } from "../../services/stop";
-import { Container, Spinner, Card } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Container, Spinner, Card, Row, Col } from "react-bootstrap";
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import L from "leaflet";
+import markerIcon from 'leaflet/dist/images/marker-icon.png';
+import markerShadow from 'leaflet/dist/images/marker-shadow.png';
 
 function StopShow() {
     const { tripSlug, daySlug, stopSlug } = useParams();
@@ -21,6 +24,20 @@ function StopShow() {
                 setLoading(false);
             });
     }, [tripSlug, daySlug, stopSlug]);
+
+    // Update the default icon options
+    useEffect(() => {
+        const DefaultIcon = L.icon({
+            iconUrl: markerIcon,
+            shadowUrl: markerShadow,
+            iconSize: [25, 41],
+            iconAnchor: [12, 41],
+            popupAnchor: [1, -34],
+            shadowSize: [41, 41],
+        });
+
+        L.Marker.prototype.options.icon = DefaultIcon;
+    }, []);
 
     if (loading) {
         return (
@@ -44,6 +61,21 @@ function StopShow() {
             <p><strong>Departure Time:</strong> {new Date(stop.departureTime).toLocaleTimeString()}</p>
 
             <Card className="mt-4">
+                <Card.Header><strong>Map</strong></Card.Header>
+                <Card.Body>
+                    <MapContainer center={stop.position} zoom={13} style={{ height: "400px", width: "100%" }}>
+                        <TileLayer
+                            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                        />
+                        <Marker position={stop.position}>
+                            <Popup>{stop.name}</Popup>
+                        </Marker>
+                    </MapContainer>
+                </Card.Body>
+            </Card>
+
+            <Card className="mt-4">
                 <Card.Header><strong>Images</strong></Card.Header>
                 <Card.Body>
                     {stop.images && stop.images.length > 0 ? (
@@ -61,6 +93,7 @@ function StopShow() {
                     )}
                 </Card.Body>
             </Card>
+
             <p><strong>Food:</strong> {stop.food}</p>
             <p><strong>Curiosities:</strong> {stop.curiosities}</p>
         </Container>

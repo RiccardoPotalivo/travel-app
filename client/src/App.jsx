@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import './App.css'
+import 'leaflet/dist/leaflet.css'
 import { BrowserRouter as Router } from 'react-router-dom'
 import AppRoutes from './routes/AppRoutes.jsx'
 
