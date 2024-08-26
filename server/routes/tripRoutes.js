@@ -7,10 +7,10 @@ import {
 
 const router = express.Router();
 
-router.route('/')
+router.route('/trips')
     .post(createTripWithDays)
     .get(getTrips)
 
-router.route('/:tripSlug').get(getTrip);
+router.route('/trips/:tripSlug').get(getTrip);
 
 export default router

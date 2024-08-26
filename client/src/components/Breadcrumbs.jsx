@@ -17,7 +17,11 @@ const Breadcrumbs = () => {
             const pathParts = location.pathname.split('/').filter(Boolean);
 
             if (pathParts[0] === 'trips') {
-                if (pathParts[1]) {
+                // Controlla se è la pagina di creazione di un nuovo trip
+                if (pathParts[1] === 'create') {
+                    setTrip(null);
+                    setDay(null);
+                } else if (pathParts[1]) {
                     const tripSlug = pathParts[1];
                     try {
                         const tripData = await fetchTrip(tripSlug);
@@ -61,7 +65,7 @@ const Breadcrumbs = () => {
 
     const isHomeActive = location.pathname === '/';
     const isTripsActive = location.pathname.startsWith('/trips') && !trip;
-    const isTripsCreate = location.pathname.startsWith('/trips/create');
+    const isTripsCreate = location.pathname === '/trips/create';
     const isTripActive = trip && !day && location.pathname.startsWith(`/trips/${trip.slug}`);
     const isDayActive = day && location.pathname.startsWith(`/trips/${trip.slug}/days/${day.slug}`);
 
@@ -73,20 +77,18 @@ const Breadcrumbs = () => {
                 </Link>
             </Breadcrumb.Item>
             {!isHomeActive && (
-            <Breadcrumb.Item className={isTripsActive ? 'active' : ''}>
-                <Link to="/trips">
-                    <Badge className={isTripsActive && !isTripsCreate ? 'badge-active' : 'badge-inactive'}>Trips</Badge>
-                </Link>
-            </Breadcrumb.Item>
+                <Breadcrumb.Item className={isTripsActive ? 'active' : ''}>
+                    <Link to="/trips">
+                        <Badge className={isTripsActive && !isTripsCreate ? 'badge-active' : 'badge-inactive'}>Trips</Badge>
+                    </Link>
+                </Breadcrumb.Item>
             )}
             {isTripsCreate && (
-            <Breadcrumb.Item className={isTripsCreate ? 'active' : ''}>
-                <Link to="/trips/create">
-                    <Badge className={isTripsCreate ? 'badge-active' : 'badge-inactive'}>Create New Trip</Badge>
-                </Link>
-            </Breadcrumb.Item>
+                <Breadcrumb.Item className={isTripsCreate ? 'active' : ''}>
+                    <Badge className="badge-active">Create New Trip</Badge>
+                </Breadcrumb.Item>
             )}
-            {trip && (
+            {trip && !isTripsCreate && (
                 <Breadcrumb.Item className={isTripActive ? 'active' : ''}>
                     <Link to={`/trips/${trip.slug}`}>
                         <Badge className={isTripActive ? 'badge-active' : 'badge-inactive'}>

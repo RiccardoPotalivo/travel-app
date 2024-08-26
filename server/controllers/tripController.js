@@ -30,7 +30,12 @@ export const getTrip = async (req, res) => {
 // Create a new trip with days
 export const createTripWithDays = async (req, res) => {
     try {
-        const { title, description, startDate, endDate } = req.body;
+        const { 
+            title, 
+            description, 
+            startDate, 
+            endDate 
+        } = req.body;
         
         // Genera lo slug per il viaggio
         const slug = await generateSlug(title, Trip);

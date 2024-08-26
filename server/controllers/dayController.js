@@ -14,7 +14,8 @@ export const getDay = async (req, res) => {
         }
 
         // Find the day using the slug
-        const day = await Day.findOne({ slug: daySlug, trip: trip._id });
+        const day = await Day.findOne({ slug: daySlug, trip: trip._id }).populate('stops');
+        console.log(day)
 
         if (!day) {
             return res.status(404).json({ message: 'Day not found for this trip' });

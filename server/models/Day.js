@@ -5,7 +5,7 @@ const daySchema = new mongoose.Schema({
     slug: { type: String, unique: true },
     date: { type: Date, required: true },
     trip: { type: mongoose.Schema.Types.ObjectId, ref: 'Trip', required: true },
-    // stops: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Stop' }],
+    stops: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Stop' }],
 }, {
     timestamps: true
 });

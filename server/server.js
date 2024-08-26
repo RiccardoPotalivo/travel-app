@@ -4,6 +4,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import tripRoutes from './routes/tripRoutes.js';
 import dayRoutes from './routes/dayRoutes.js';
+import stopRoutes from './routes/stopRoutes.js';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
@@ -23,8 +24,9 @@ mongoose.connect(process.env.MONGODB_URI)
 .catch((err) => console.error('Errore di connessione:', err));
 
 // Routes
-app.use('/api/trips', tripRoutes);
+app.use('/api', tripRoutes);
 app.use('/api', dayRoutes);
+app.use('/api', stopRoutes);
 
 // Middleware error handling
 app.use((err, req, res, next) => {

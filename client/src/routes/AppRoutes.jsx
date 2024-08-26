@@ -6,6 +6,7 @@ import TripIndex from "../pages/Trip/index";
 import TripShow from "../pages/Trip/show";
 import TripCreate from "../pages/Trip/create";
 import DayShow from "../pages/Day/show";
+import StopCreate from "../pages/Stop/create";
 
 function AppRoutes() {
     return (
@@ -17,6 +18,7 @@ function AppRoutes() {
                 <Route path="/trips/:tripSlug" element={<TripShow />} />
                 <Route path="/trips/create" element={<TripCreate />} />
                 <Route path="/trips/:tripSlug/days/:daySlug" element={<DayShow />} />
+                <Route path="/trips/:tripSlug/days/:daySlug/stops/create" element={<StopCreate />} />
             </Routes>
         </div>
     );
