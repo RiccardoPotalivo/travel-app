@@ -3,17 +3,17 @@ import axios from "axios";
 const API_URL = "http://localhost:5000/api/trips";
 
 // Fetch stops
-export const fetchStops = async (tripSlug) => {
-    try {
-        // console.log(`Fetching stops with tripSlug: ${tripSlug}`);
-        const response = await axios.get(`${API_URL}/${tripSlug}/days/${daySlug}/stops`);
-        // console.log('Fetched stops:', response.data);
-        return response.data;
-    } catch (error) {
-        console.error(`Error fetching stops with tripSlug ${tripSlug}:`, error.response?.data || error.message);
-        throw error;
-    }
-}
+// export const fetchStops = async (tripSlug) => {
+//     try {
+//         // console.log(`Fetching stops with tripSlug: ${tripSlug}`);
+//         const response = await axios.get(`${API_URL}/${tripSlug}/days/${daySlug}/stops`);
+//         // console.log('Fetched stops:', response.data);
+//         return response.data;
+//     } catch (error) {
+//         console.error(`Error fetching stops with tripSlug ${tripSlug}:`, error.response?.data || error.message);
+//         throw error;
+//     }
+// }
 
 // Fetch a single stop
 export const fetchStop = async (tripSlug, daySlug, stopSlug) => {

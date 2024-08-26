@@ -3,6 +3,38 @@ import Trip from '../models/Trip.js';
 import Day from '../models/Day.js';
 import Stop from '../models/Stop.js';
 
+// Get a single stop
+export const getStop = async (req, res) => {
+    const { tripSlug, daySlug, stopSlug } = req.params;
+
+    try {
+        // Find the trip using the slug
+        const trip = await Trip.findOne({ slug: tripSlug });
+
+        if (!trip) {
+            return res.status(404).json({ message: 'Trip not found' });
+        }
+
+        // Find the day using the slug
+        const day = await Day.findOne({ slug: daySlug, trip: trip._id });
+
+        if (!day) {
+            return res.status(404).json({ message: 'Day not found for this trip' });
+        }
+
+        // Find the stop using the slug
+        const stop = await Stop.findOne({ slug: stopSlug, day: day._id });
+
+        if (!stop) {
+            return res.status(404).json({ message: 'Stop not found for this day' });
+        }
+
+        res.status(200).json(stop);
+    } catch (error) {
+        res.status(500).json({ message: 'Error fetching the stop', error });
+    }
+};
+
 // Create a new stop
 export const createStop = async (req, res) => {
     try {

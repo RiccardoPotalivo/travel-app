@@ -52,7 +52,9 @@ function DayShow() {
                     <ListGroup variant="flush">
                         {day.stops.map((stop) => (
                             <ListGroup.Item key={stop._id}>
-                                <h5>{stop.name}</h5>
+                                <Link to={`/trips/${tripSlug}/days/${daySlug}/stops/${stop.slug}`}>
+                                    <h5> {stop.name}</h5>
+                                </Link>
                                 <p><strong>Position:</strong> {stop.position[0]}, {stop.position[1]}</p>
                                 <p><strong>Arrival Time:</strong> {new Date(stop.arrivalTime).toLocaleTimeString()}</p>
                                 <p><strong>Departure Time:</strong> {new Date(stop.departureTime).toLocaleTimeString()}</p>
