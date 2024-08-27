@@ -20,12 +20,13 @@ const Breadcrumbs = () => {
 
             try {
                 if (pathParts[0] === 'trips') {
+                    console.log(pathParts);
                     const tripSlug = pathParts[1];
                     if (tripSlug === 'create') {
                         setTrip(null);
                         setDay(null);
                         setStop(null);
-                    } else {
+                    } else if (tripSlug) {
                         const tripData = await fetchTrip(tripSlug);
                         setTrip(tripData);
 

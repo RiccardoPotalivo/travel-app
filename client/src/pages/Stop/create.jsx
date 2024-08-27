@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import { createStop } from "../../services/stop";
 import { Container, Form, Button } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
 
 function StopCreate() {
     const { tripSlug, daySlug } = useParams();
@@ -16,7 +15,6 @@ function StopCreate() {
         curiosities: "",        
     });
 
-    // const navigate = useNavigate();
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -45,10 +43,6 @@ function StopCreate() {
                     food: "",
                     curiosities: "",
                 });
-
-                // Correctly navigate to the newly created stop's page
-                // const { trip, day, slug } = response.data;
-                // navigate(`/trips/${trip.slug}/days/${day.slug}/stops/${slug}`);
             })
             .catch((error) => {
                 console.error("There was an error creating the stop!", error);

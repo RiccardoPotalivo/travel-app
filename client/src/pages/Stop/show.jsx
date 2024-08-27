@@ -4,8 +4,10 @@ import { fetchStop } from "../../services/stop";
 import { Container, Spinner, Card, Row, Col } from "react-bootstrap";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import L from "leaflet";
+import 'leaflet/dist/leaflet.css';
 import markerIcon from 'leaflet/dist/images/marker-icon.png';
 import markerShadow from 'leaflet/dist/images/marker-shadow.png';
+import './show.scss';
 
 function StopShow() {
     const { tripSlug, daySlug, stopSlug } = useParams();
@@ -25,7 +27,6 @@ function StopShow() {
             });
     }, [tripSlug, daySlug, stopSlug]);
 
-    // Update the default icon options
     useEffect(() => {
         const DefaultIcon = L.icon({
             iconUrl: markerIcon,
@@ -63,15 +64,17 @@ function StopShow() {
             <Card className="mt-4">
                 <Card.Header><strong>Map</strong></Card.Header>
                 <Card.Body>
-                    <MapContainer center={stop.position} zoom={13} style={{ height: "400px", width: "100%" }}>
-                        <TileLayer
-                            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                        />
-                        <Marker position={stop.position}>
-                            <Popup>{stop.name}</Popup>
-                        </Marker>
-                    </MapContainer>
+                    <div className="map-container">
+                        <MapContainer center={stop.position} zoom={13} style={{ height: "100%", width: "100%" }}>
+                            <TileLayer
+                                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                            />
+                            <Marker position={stop.position}>
+                                <Popup>{stop.name}</Popup>
+                            </Marker>
+                        </MapContainer>
+                    </div>
                 </Card.Body>
             </Card>
 

@@ -1,8 +1,8 @@
-import { useState } from 'react'
-import './App.css'
-import 'leaflet/dist/leaflet.css'
-import { BrowserRouter as Router } from 'react-router-dom'
-import AppRoutes from './routes/AppRoutes.jsx'
+import { useState } from 'react';
+import './App.css';
+// import 'react-leaflet/dist/leaflet.css';
+import { BrowserRouter as Router } from 'react-router-dom';
+import AppRoutes from './routes/AppRoutes.jsx';
 
 function App() {
   return (
