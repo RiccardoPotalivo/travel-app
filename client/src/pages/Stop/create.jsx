@@ -153,7 +153,7 @@ function StopCreate() {
                         placeholder="Enter curiosities"
                     />
                 </Form.Group>
-                <Button variant="primary" type="submit" className="mt-3">
+                <Button variant="primary" type="submit" className="mt-3 mb-5">
                     Create Stop
                 </Button>
             </Form>

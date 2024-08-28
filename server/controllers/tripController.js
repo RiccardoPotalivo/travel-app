@@ -1,6 +1,7 @@
 import generateSlug from '../utils/generateSlug.js';
 import Trip from '../models/Trip.js';
 import Day from '../models/Day.js';
+import Stop from '../models/Stop.js';
 
 // Get all trips
 export const getTrips = async (req, res) => {
@@ -16,7 +17,14 @@ export const getTrips = async (req, res) => {
 // Get a single trip
 export const getTrip = async (req, res) => {
     try {
-        const trip = await Trip.findOne({ slug: req.params.tripSlug }).populate('days');
+        const trip = await Trip.findOne({ slug: req.params.tripSlug })
+        .populate({
+            path: 'days',
+            populate: {
+                path: 'stops',
+                model: 'Stop'
+            }
+        });
         // console.log('trip back', trip);
         if (!trip) {
             return res.status(404).json({ message: 'Trip not found' });
