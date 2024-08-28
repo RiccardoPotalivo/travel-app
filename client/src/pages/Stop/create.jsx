@@ -2,6 +2,21 @@ import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import { createStop } from "../../services/stop";
 import { Container, Form, Button } from "react-bootstrap";
+import { MapContainer, TileLayer, Marker, useMapEvents } from "react-leaflet";
+import "leaflet/dist/leaflet.css";
+
+// Funzione per impostare un marker sulla mappa
+function LocationMarker({ position, setPosition }) {
+    useMapEvents({
+        click(e) {
+            setPosition([e.latlng.lat, e.latlng.lng]);
+        }
+    });
+
+    return position ? (
+        <Marker position={position}></Marker>
+    ) : null;
+}
 
 function StopCreate() {
     const { tripSlug, daySlug } = useParams();
@@ -12,13 +27,12 @@ function StopCreate() {
         departureTime: "",
         images: [],
         food: "",
-        curiosities: "",        
+        curiosities: "",
     });
-
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        
+
         if (name === "position") {
             const [lat, lng] = value.split(",");
             setStopData({ ...stopData, position: [parseFloat(lat), parseFloat(lng)] });
@@ -26,13 +40,12 @@ function StopCreate() {
             setStopData({ ...stopData, [name]: value });
         }
     };
-    
 
     const handleSubmit = (e) => {
         e.preventDefault();
         // Send the post request to create a new Stop
         createStop(tripSlug, daySlug, stopData)
-            .then(response => {
+            .then((response) => {
                 // Reset form state
                 setStopData({
                     name: "",
@@ -46,7 +59,7 @@ function StopCreate() {
             })
             .catch((error) => {
                 console.error("There was an error creating the stop!", error);
-            })
+            });
     };
 
     return (
@@ -73,7 +86,22 @@ function StopCreate() {
                         onChange={handleChange}
                         placeholder="Enter stop position"
                         required
+                        readOnly
                     />
+                    <MapContainer
+                        center={[51.505, -0.09]}
+                        zoom={13}
+                        style={{ height: "400px", marginTop: "20px" }}
+                    >
+                        <TileLayer
+                            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                        />
+                        <LocationMarker
+                            position={stopData.position}
+                            setPosition={(pos) => setStopData({ ...stopData, position: pos })}
+                        />
+                    </MapContainer>
                 </Form.Group>
                 <Form.Group controlId="formArrivalTime" className="mt-3">
                     <Form.Label>Arrival Time</Form.Label>
